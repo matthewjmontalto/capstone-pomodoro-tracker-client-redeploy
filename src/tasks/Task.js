@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { Redirect } from 'react-router'
 import { Link, withRouter } from 'react-router-dom'
 
 import axios from 'axios'
@@ -10,7 +11,8 @@ class Task extends Component {
 
     this.state = {
       task: null,
-      isLoaded: false
+      isLoaded: false,
+      shouldRedirect: false
     }
   }
 
@@ -31,13 +33,29 @@ class Task extends Component {
       .catch(console.log)
   }
 
-  handleDelete = event => (
-    event.preventDefault()
-  )
+  handleDelete = event => {
+    const userToken = this.props.user.token
+    const taskId = this.props.match.params.id
+    axios({
+      url: `${apiUrl}/tasks/${taskId}`,
+      method: 'delete',
+      headers: {
+        Authorization: `Token token=${userToken}`
+      }
+    })
+      .then(response => this.setState({ shouldRedirect: true }))
+      .catch(console.log)
+  }
 
   render () {
     if (!this.state.task) {
       return <p>Loading...</p>
+    }
+
+    if (this.state.shouldRedirect) {
+      return <Redirect to={{
+        pathname: '/tasks'
+      }} />
     }
 
     const { id, title, description, date, difficulty, completed } = this.state.task
