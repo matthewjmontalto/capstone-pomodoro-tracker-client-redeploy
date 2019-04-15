@@ -65,7 +65,7 @@ class Task extends Component {
         <p>Description: {description}</p>
         <p>Date: {date}</p>
         <p>difficulty: {difficulty}</p>
-        <p>completed: {completed}</p>
+        <p>completed: {completed ? 'Done' : 'Incomplete'}</p>
         <button key={id} onClick={this.handleDelete}>Delete Task</button>
         <Link to={this.props.match.url + '/edit'}><button>Edit Task Details</button></Link>
       </Fragment>
