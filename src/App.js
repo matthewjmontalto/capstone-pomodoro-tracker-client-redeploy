@@ -2,12 +2,16 @@ import React, { Component } from 'react'
 import './App.scss'
 import { Route } from 'react-router-dom'
 
+// Auth/Nav components
 import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
 import Header from './header/Header'
 import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
+
+// Resource components
+import Tasks from './tasks/tasks.js'
 
 import Alert from 'react-bootstrap/Alert'
 
@@ -43,6 +47,7 @@ class App extends Component {
           </Alert>
         ))}
         <main className="container">
+          {/* Nav/Auth Routes */}
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
@@ -54,6 +59,10 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
+          )} />
+          {/* Task Routes */}
+          <AuthenticatedRoute user={user} path='/tasks' render={(props) => (
+            <Tasks alert={this.alert} user={user} />
           )} />
         </main>
       </React.Fragment>
