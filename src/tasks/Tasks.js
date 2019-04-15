@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-// import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 import axios from 'axios'
 import apiUrl from '../apiConfig'
@@ -38,13 +38,16 @@ class Tasks extends Component {
       return <p>Loading...</p>
     }
 
-    console.log('Tasks component renders')
+    console.log('Tasks component renders', this.state.tasks)
     return (
       <Fragment>
+        <NavLink to="/create-task">Add Task</NavLink>
         <h2>Today&#39;s Tasks</h2>
         <ul>
           { this.state.tasks.map(task => (
-            <li key={task.id}>{task.title}</li>
+            <li key={task.id}>
+              <Link to={'/tasks/' + task.id}>{task.title}</Link>
+            </li>
           )) }
         </ul>
       </Fragment>

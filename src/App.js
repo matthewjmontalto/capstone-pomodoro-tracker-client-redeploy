@@ -11,7 +11,8 @@ import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 
 // Resource components
-import Tasks from './tasks/tasks.js'
+import Tasks from './tasks/Tasks.js'
+import CreateTask from './tasks/CreateTask.js'
 
 import Alert from 'react-bootstrap/Alert'
 
@@ -63,6 +64,9 @@ class App extends Component {
           {/* Task Routes */}
           <AuthenticatedRoute user={user} path='/tasks' render={(props) => (
             <Tasks alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/create-task' render={(props) => (
+            <CreateTask alert={this.alert} user={user} />
           )} />
         </main>
       </React.Fragment>
