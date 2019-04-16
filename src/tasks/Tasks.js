@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import Timer from '../timer/Timer.js'
 
 import messages from '../auth/messages'
 
@@ -43,6 +44,7 @@ class Tasks extends Component {
           { this.state.tasks.map(task => (
             <li key={task.id}>
               <Link to={'/tasks/' + task.id}>{task.title}</Link>
+              <Timer />
             </li>
           )) }
         </ul>
