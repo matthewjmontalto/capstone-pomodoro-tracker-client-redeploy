@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
+import apiActions from '../apiActions.js'
+
 class Timer extends Component {
   constructor () {
     super()
@@ -14,6 +16,7 @@ class Timer extends Component {
 
     this.secondsRemaining = 0
     this.handleInterval = null
+    this.numElapsedTimers = 0
   }
 
   tick = () => {
@@ -39,11 +42,13 @@ class Timer extends Component {
       })
     }
 
-    // when timer runs down to 00:00 clear interval and toggle between
-    // and break timets.
+    // when timer runs down to 00:00 clear interval and toggle between work
+    // and break times.
     if (min === 0 & sec === 0) {
       clearInterval(this.handleInterval)
       if (!this.state.onBreak) {
+        // increment count of elapsed timers
+        this.numElapsedTimers++
         this.setState({
           minutes: 5,
           seconds: 0,
@@ -96,11 +101,29 @@ class Timer extends Component {
     })
   }
 
+  // when component unmounts...
+  componentWillUnmount = () => {
+    // stop interval
+    clearInterval(this.handleInterval)
+    // deconstruct props for api patch call
+    const { user, task } = this.props
+    const userToken = user.token
+    const taskId = task.id
+
+    // before api call, add num of times timer reached 00:00 to current number
+    // of pomodoro sessions stored in db
+    task.number_pomodoro_sessions += this.numElapsedTimers
+
+    // patch resource with updated total number times timer elapsed
+    apiActions.editTask(task, taskId, userToken)
+      .then(console.log)
+      .catch(console.log)
+  }
+
   render () {
     return (
       <Fragment>
-        <p>timer</p>
-        <p>{this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</p>
+        <p>timer: {this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</p>
         <button onClick={this.startCountdown}>start</button>
         <button onClick={this.pauseCountdown}>pause</button>
         <button onClick={this.resetCountdown}>Reset</button>
