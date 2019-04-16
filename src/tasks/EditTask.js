@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router'
 import { Link, withRouter } from 'react-router-dom'
 
-import axios from 'axios'
-import apiUrl from '../apiConfig'
+// import functions that handle api calls
+import apiActions from '../apiActions.js'
 
 class EditTask extends Component {
   constructor () {
@@ -19,13 +19,8 @@ class EditTask extends Component {
     console.log('Edit Task component mounted')
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
-    axios({
-      url: `${apiUrl}/tasks/${taskId}`,
-      method: 'get',
-      headers: {
-        Authorization: `Token token=${userToken}`
-      }
-    })
+    // 'GET' /task/:id
+    apiActions.getTask(taskId, userToken)
       .then(response => (
         this.setState({ task: response.data.task })
       ))
@@ -38,14 +33,8 @@ class EditTask extends Component {
     const taskId = this.props.match.params.id
     const { task } = this.state
 
-    axios({
-      url: `${apiUrl}/tasks/${taskId}`,
-      method: 'patch',
-      headers: {
-        Authorization: `Token token=${userToken}`
-      },
-      data: { task }
-    })
+    // 'PATCH' '/tasks/:id'
+    apiActions.editTask(task, taskId, userToken)
       .then(response => (
         this.setState({
           task: response.data.task,
@@ -71,9 +60,9 @@ class EditTask extends Component {
     // fix checkbox to be true or false instead of 'on' or ''
     const updatedInputValue = event.target.type === 'checkbox' ? event.target.checked : event.target.value
     // create new object to overwrite initial state.task with form data as provided
-    const updatedTask = { ...this.state.task, [inputName]: updatedInputValue }
+    const updatedTaskObject = { ...this.state.task, [inputName]: updatedInputValue }
     // overwrite initial state.task with create-form data
-    this.setState({ task: updatedTask })
+    this.setState({ task: updatedTaskObject })
   }
 
   render () {

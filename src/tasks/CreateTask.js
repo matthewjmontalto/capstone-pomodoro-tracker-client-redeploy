@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
 
-import axios from 'axios'
-import apiUrl from '../apiConfig'
+// import functions that handle api calls
+import apiActions from '../apiActions.js'
 
 class CreateTask extends Component {
   constructor () {
@@ -26,15 +26,10 @@ class CreateTask extends Component {
     event.preventDefault()
 
     const { task } = this.state
+    const userToken = this.props.user.token
 
-    axios({
-      url: `${apiUrl}/tasks`,
-      method: 'post',
-      headers: {
-        Authorization: `Token token=${this.props.user.token}`
-      },
-      data: { task }
-    })
+    // 'POST' /tasks
+    apiActions.createTask(task, userToken)
       .then(response => (
         this.setState({
           task: response.data.task,
@@ -61,9 +56,9 @@ class CreateTask extends Component {
     // hold form input value
     const updateInputValue = event.target.value
     // create new object to overwrite initial state.task with form data as provided
-    const createTask = { ...this.state.task, [inputName]: updateInputValue }
+    const createTaskObject = { ...this.state.task, [inputName]: updateInputValue }
     // overwrite initial state.task with create-form data
-    this.setState({ task: createTask })
+    this.setState({ task: createTaskObject })
   }
 
   render () {

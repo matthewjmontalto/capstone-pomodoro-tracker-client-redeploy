@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
-import axios from 'axios'
-import apiUrl from '../apiConfig'
+// import functions that handle api calls
+import apiActions from '../apiActions.js'
 
 class Tasks extends Component {
   constructor () {
@@ -15,19 +15,13 @@ class Tasks extends Component {
   }
   // run get request when component mounts
   componentDidMount () {
-    console.log('Tasks component mounted')
-    // "GET" /Tasks
-    axios({
-      url: `${apiUrl}/tasks`,
-      method: 'get',
-      headers: {
-        Authorization: `Token token=${this.props.user.token}`
-      }
-    })
+    // "GET" /tasks
+    const userToken = this.props.user.token
+    apiActions.getTasks(userToken)
       .then(response => (
         this.setState({
-          isLoaded: true,
-          tasks: response.data.tasks
+          tasks: response.data.tasks,
+          isLoaded: true
         })
       ))
       .catch(console.log)

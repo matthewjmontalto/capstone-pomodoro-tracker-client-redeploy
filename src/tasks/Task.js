@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router'
 import { Link, withRouter } from 'react-router-dom'
 
-import axios from 'axios'
-import apiUrl from '../apiConfig'
+// import functions that handle api calls
+import apiActions from '../apiActions.js'
 
 class Task extends Component {
   constructor () {
@@ -16,17 +16,13 @@ class Task extends Component {
     }
   }
 
+  // run get request when component mounts
   componentDidMount = () => {
-    console.log('Task component mounted')
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
-    axios({
-      url: `${apiUrl}/tasks/${taskId}`,
-      method: 'get',
-      headers: {
-        Authorization: `Token token=${userToken}`
-      }
-    })
+
+    // 'GET' /task/:id
+    apiActions.getTask(taskId, userToken)
       .then(response => (
         this.setState({ task: response.data.task })
       ))
@@ -36,13 +32,9 @@ class Task extends Component {
   handleDelete = event => {
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
-    axios({
-      url: `${apiUrl}/tasks/${taskId}`,
-      method: 'delete',
-      headers: {
-        Authorization: `Token token=${userToken}`
-      }
-    })
+
+    // 'DELETE' /task/:id
+    apiActions.deleteTask(taskId, userToken)
       .then(response => this.setState({ shouldRedirect: true }))
       .catch(console.log)
   }
