@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router'
 import { Link, withRouter } from 'react-router-dom'
 
+import messages from '../auth/messages'
+
 // import functions that handle api calls
 import apiActions from '../apiActions.js'
 
@@ -26,7 +28,7 @@ class Task extends Component {
       .then(response => (
         this.setState({ task: response.data.task })
       ))
-      .catch(console.log)
+      .catch(() => alert(messages.getTaskFailure, 'danger'))
   }
 
   handleDelete = event => {
@@ -36,7 +38,7 @@ class Task extends Component {
     // 'DELETE' /task/:id
     apiActions.deleteTask(taskId, userToken)
       .then(response => this.setState({ shouldRedirect: true }))
-      .catch(console.log)
+      .catch(() => alert(messages.deleteTasksFailure, 'danger'))
   }
 
   render () {

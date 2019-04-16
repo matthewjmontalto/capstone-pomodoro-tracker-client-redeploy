@@ -8,5 +8,10 @@ export default {
   signOutSuccess: 'Come back soon!',
   changePasswordSuccess: 'Password changed successfully!',
   changePasswordFailure: 'Failed to change passwords. Check your old password' +
-                         ' and try again.'
+                         ' and try again.',
+  getTasksFailure: 'Failed to retrieve your tasks',
+  getTaskFailure: 'Failed to retrieve your task',
+  createTaskFailure: 'Failed to create a new task',
+  editTaskFailure: 'Failed to update the task',
+  deleteTaskFailure: 'Failed to delete task'
 }

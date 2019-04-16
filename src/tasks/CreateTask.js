@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
 
+import messages from '../auth/messages'
+
 // import functions that handle api calls
 import apiActions from '../apiActions.js'
 
@@ -48,6 +50,7 @@ class CreateTask extends Component {
           }
         })
       ))
+      .catch(() => alert(messages.createTaskFailure, 'danger'))
   }
 
   handleChange = event => {

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 
+import messages from '../auth/messages'
+
 // import functions that handle api calls
 import apiActions from '../apiActions.js'
 
@@ -15,6 +17,7 @@ class Tasks extends Component {
   }
   // run get request when component mounts
   componentDidMount () {
+    const { alert } = this.props
     // "GET" /tasks
     const userToken = this.props.user.token
     apiActions.getTasks(userToken)
@@ -24,7 +27,7 @@ class Tasks extends Component {
           isLoaded: true
         })
       ))
-      .catch(console.log)
+      .catch(() => alert(messages.getTasksFailure, 'danger'))
   }
 
   render () {
@@ -32,7 +35,6 @@ class Tasks extends Component {
       return <p>Loading...</p>
     }
 
-    console.log('Tasks component renders', this.state.tasks)
     return (
       <Fragment>
         <NavLink to="/create-task">Add Task</NavLink>

@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router'
 import { Link, withRouter } from 'react-router-dom'
 
+import messages from '../auth/messages'
+
 // import functions that handle api calls
 import apiActions from '../apiActions.js'
 
@@ -16,7 +18,6 @@ class EditTask extends Component {
   }
 
   componentDidMount = () => {
-    console.log('Edit Task component mounted')
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
     // 'GET' /task/:id
@@ -24,7 +25,7 @@ class EditTask extends Component {
       .then(response => (
         this.setState({ task: response.data.task })
       ))
-      .catch(console.log)
+      .catch(() => alert(messages.getTaskFailure, 'danger'))
   }
 
   handleSubmit = event => {
@@ -52,6 +53,7 @@ class EditTask extends Component {
           }
         })
       ))
+      .catch(() => alert(messages.editTaskFailure, 'danger'))
   }
 
   handleChange = event => {
