@@ -33,7 +33,7 @@ class Tasks extends Component {
 
   render () {
     if (this.state.tasks.length === 0) {
-      return <p>Loading...</p>
+      return <NavLink to="/create-task">Add Task</NavLink>
     }
 
     return (
@@ -44,7 +44,11 @@ class Tasks extends Component {
           { this.state.tasks.map(task => (
             <li key={task.id}>
               <Link to={'/tasks/' + task.id}>{task.title}</Link>
-              <Timer />
+              <p>pomodoro rounds: {task.number_pomodoro_sessions}</p>
+              <Timer
+                user={this.props.user}
+                task={task}
+              />
             </li>
           )) }
         </ul>
