@@ -74,6 +74,8 @@ class Timer extends Component {
     const sec = this.state.seconds
     // convert minutes place to seconds and add seconds place to total secondsRemaining
     this.secondsRemaining = (min * 60) + sec
+    // call tick first time to compensate for delay experiences with setInterval
+    this.tick()
     // call this.tick() every second until setInterval gets cleared
     this.handleInterval = setInterval(this.tick, 1000)
     // toggle state to represent a running timer
