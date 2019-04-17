@@ -31,17 +31,12 @@ class Tasks extends Component {
       .catch(() => alert(messages.getTasksFailure, 'danger'))
   }
 
-  render () {
-    if (this.state.tasks.length === 0) {
-      return <NavLink to="/create-task">Add Task</NavLink>
-    }
+  sortTasks = () => (
+    this.state.tasks.sort((a, b) => new Date(b.date) - new Date(a.date))
+  )
 
-    // at render, sort tasks object by date
-    const sortedTasks = this.state.tasks.sort((a, b) => {
-      return new Date(b.date) - new Date(a.date)
-    })
-
-    const todaysTasks = sortedTasks.filter(task => {
+  todaysTasks = () => (
+    this.state.tasks.filter(task => {
       // starting format is YYYY-MM-DD. Append 12:00 to force date to be today
       const ignoreTimezone = `${task.date} 12:00`
       // convert starting format to JS date formate
@@ -51,13 +46,19 @@ class Tasks extends Component {
       // return new array with objects containing today's date
       return taskDate.toDateString() === today.toDateString()
     })
+  )
+
+  render () {
+    if (this.state.tasks.length === 0) {
+      return <NavLink to="/create-task">Add Task</NavLink>
+    }
 
     return (
       <Fragment>
         <NavLink to="/create-task">Add Task</NavLink>
         <h2>Today&#39;s Tasks</h2>
         <ul>
-          { todaysTasks.map(task => (
+          { this.sortTasks().map(task => (
             <li key={task.id}>
               <Link to={'/tasks/' + task.id}>{task.title}</Link>
               <p>pomodoro rounds: {task.number_pomodoro_sessions}</p>
