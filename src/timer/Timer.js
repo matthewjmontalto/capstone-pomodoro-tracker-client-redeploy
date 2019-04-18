@@ -1,6 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import apiActions from '../apiActions.js'
+
+import './Timer.scss'
 
 class Timer extends Component {
   constructor () {
@@ -124,12 +126,14 @@ class Timer extends Component {
 
   render () {
     return (
-      <Fragment>
-        <p>timer: {this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</p>
-        <button onClick={this.startCountdown}>start</button>
-        <button onClick={this.pauseCountdown}>pause</button>
-        <button onClick={this.resetCountdown}>Reset</button>
-      </Fragment>
+      <div className="pomodoro">
+        <div className="timer">{this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</div>
+        <div className="timer-controls">
+          <i onClick={this.startCountdown} className="material-icons">play_arrow</i>
+          <i onClick={this.pauseCountdown} className="material-icons">pause_circle_outline</i>
+          <i onClick={this.resetCountdown} className="material-icons">update</i>
+        </div>
+      </div>
     )
   }
 }

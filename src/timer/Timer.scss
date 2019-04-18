@@ -1,0 +1,27 @@
+$deep-carbon: #545454;
+$watermelon: #ff383f;
+
+.pomodoro {
+  align-items: center;
+  display: flex;
+}
+
+.timer {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.timer-controls {
+  color: $deep-carbon;
+  margin: 0 .5rem;
+
+  > i {
+    font-size: 2rem;
+    margin: 0 .25rem;
+  }
+
+  :hover {
+    color: $watermelon;
+    cursor: pointer;
+  }
+}

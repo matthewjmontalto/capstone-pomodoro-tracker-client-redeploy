@@ -36,6 +36,10 @@ class App extends Component {
     this.setState({ alerts: [...this.state.alerts, { message, type }] })
   }
 
+  componentWillMount () {
+    document.body.style.backgroundColor = '#efefef'
+  }
+
   render () {
     const { alerts, user } = this.state
 

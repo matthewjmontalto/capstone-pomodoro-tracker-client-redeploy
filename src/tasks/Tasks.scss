@@ -1,0 +1,67 @@
+$carbon: #a9a9a9;
+$neutral: #efefef;
+$watermelon: #ff383f;
+$sky: #caebf2;
+$deep-carbon: #545454;
+
+.add-task {
+  color: $deep-carbon;
+
+  > i {
+    font-size: 2rem;
+  }
+
+  :hover {
+    color: $watermelon;
+    text-decoration: none;
+  }
+}
+
+.task {
+  align-items: center;
+  background-color: $sky;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  margin: .5em auto;
+  padding: 1em;
+}
+
+.tasks-list {
+  h2 {
+    color: $carbon;
+  }
+}
+
+.tasks-header {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.task-title {
+  color: $deep-carbon;
+  display: flex;
+  font-size: 1.5rem;
+
+  :hover {
+    color: $watermelon;
+    text-decoration: none;
+  }
+}
+
+.task-complete {
+  color: $deep-carbon;
+
+  > i {
+    font-size: 2rem;
+  }
+
+  :hover {
+    color: $watermelon;
+    cursor: pointer;
+    font-size: 2.25rem;
+  }
+}

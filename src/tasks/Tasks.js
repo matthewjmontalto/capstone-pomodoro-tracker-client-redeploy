@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Timer from '../timer/Timer.js'
+
+import './Tasks.scss'
 
 import messages from '../auth/messages'
 
@@ -55,21 +57,36 @@ class Tasks extends Component {
 
     return (
       <Fragment>
-        <NavLink to="/create-task">Add Task</NavLink>
-        <h2>Today&#39;s Tasks</h2>
-        <ul>
+        <section className="tasks-list">
+          <header className="tasks-header">
+            <div>
+              <h2>My Tasks</h2>
+            </div>
+            <div>
+              <NavLink to="/create-task">
+                <div className="add-task">
+                  <i className="material-icons">add_circle</i>
+                </div>
+              </NavLink>
+            </div>
+          </header>
           { this.sortTasks().map(task => (
-            <li key={task.id}>
-              <Link to={'/tasks/' + task.id}>{task.title}</Link>
-              <p>pomodoro rounds: {task.number_pomodoro_sessions}</p>
-              <p>date: {task.date}</p>
-              <Timer
-                user={this.props.user}
-                task={task}
-              />
-            </li>
+            <div key={task.id} className="task">
+              <div className="task-complete">
+                <i className="material-icons">check_circle_outline</i>
+              </div>
+              <div className="task-title">
+                <NavLink to={'/tasks/' + task.id}>{task.title}</NavLink>
+              </div>
+              <div>
+                <Timer
+                  user={this.props.user}
+                  task={task}
+                />
+              </div>
+            </div>
           )) }
-        </ul>
+        </section>
       </Fragment>
     )
   }
