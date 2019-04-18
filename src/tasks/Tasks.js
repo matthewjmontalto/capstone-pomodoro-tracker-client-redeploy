@@ -91,7 +91,7 @@ class Tasks extends Component {
             </div>
           </header>
           { this.sortTasks().map(task => (
-            <div key={task.id} className="task">
+            <div key={task.id} className={ task.completed ? 'task completed' : 'task incomplete' }>
               <div className="task-complete">
                 <i id={task.id} onClick={this.completeTask} className="material-icons">{task.completed ? '' : 'check_circle_outline'}</i>
               </div>

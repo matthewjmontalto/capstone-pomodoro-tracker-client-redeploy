@@ -17,13 +17,16 @@ $deep-carbon: #545454;
   }
 }
 
+.incomplete {
+  background-color: $sky;
+}
+
 .completed {
   background-color: $carbon;
 }
 
 .task {
   align-items: center;
-  background-color: $sky;
   border-radius: 5px;
   display: flex;
   justify-content: space-around;
