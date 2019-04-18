@@ -71,6 +71,9 @@ class Timer extends Component {
 
   // called when start button clicked
   startCountdown = () => {
+    if (this.state.isCounting) {
+      return
+    }
     // pull down current state of minutes and seconds
     const min = this.state.minutes
     const sec = this.state.seconds
