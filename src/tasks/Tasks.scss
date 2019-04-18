@@ -23,6 +23,10 @@ $deep-carbon: #545454;
 
 .completed {
   background-color: $carbon;
+
+  & .pomodoro {
+    display: none;
+  }
 }
 
 .task {

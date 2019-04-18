@@ -123,6 +123,12 @@ class Timer extends Component {
     })
   }
 
+  componentWillUnmount = () => {
+    if (this.state.isCounting) {
+      clearInterval(this.handleInterval)
+    }
+  }
+
   // Look for method to stall sign-out to allow for uninterrupted patch call/response
   // before unmount
 
