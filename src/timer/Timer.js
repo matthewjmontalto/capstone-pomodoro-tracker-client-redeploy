@@ -44,19 +44,32 @@ class Timer extends Component {
       })
     }
 
-    // when timer runs down to 00:00 clear interval and toggle between work
-    // and break times.
+    // when timer runs down to 00:00 clear interval, update db, and toggle
+    // between work and break times.
     if (min === 0 & sec === 0) {
       clearInterval(this.handleInterval)
       if (!this.state.onBreak) {
         // increment count of elapsed timers
         this.numElapsedTimers++
-        this.setState({
-          minutes: 5,
-          seconds: 0,
-          isCounting: false,
-          onBreak: true
-        })
+        // deconstruct props for api patch call
+        const { user, task } = this.props
+        const userToken = user.token
+        const taskId = task.id
+        // before api call, add num of times timer reached 00:00 to current number
+        // of pomodoro sessions returned from db
+        task.number_pomodoro_sessions += this.numElapsedTimers
+
+        // patch resource with updated total number times timer elapsed
+        apiActions.editTask(task, taskId, userToken)
+          .then(() => {
+            this.setState({
+              minutes: 5,
+              seconds: 0,
+              isCounting: false,
+              onBreak: true
+            })
+          })
+          .catch(console.log)
       } else {
         this.setState({
           minutes: 25,
@@ -108,24 +121,27 @@ class Timer extends Component {
     })
   }
 
+  // Look for method to stall sign-out to allow for uninterrupted patch call/response
+  // before unmount
+
   // when component unmounts...
-  componentWillUnmount = () => {
-    // stop interval
-    clearInterval(this.handleInterval)
-    // deconstruct props for api patch call
-    const { user, task } = this.props
-    const userToken = user.token
-    const taskId = task.id
-
-    // before api call, add num of times timer reached 00:00 to current number
-    // of pomodoro sessions stored in db
-    task.number_pomodoro_sessions += this.numElapsedTimers
-
-    // patch resource with updated total number times timer elapsed
-    apiActions.editTask(task, taskId, userToken)
-      .then(console.log)
-      .catch(console.log)
-  }
+  // componentWillUnmount = () => {
+  //   // stop interval
+  //   clearInterval(this.handleInterval)
+  //   // deconstruct props for api patch call
+  //   const { user, task } = this.props
+  //   const userToken = user.token
+  //   const taskId = task.id
+  //
+  //   // before api call, add num of times timer reached 00:00 to current number
+  //   // of pomodoro sessions stored in db
+  //   task.number_pomodoro_sessions += this.numElapsedTimers
+  //
+  //   // patch resource with updated total number times timer elapsed
+  //   apiActions.editTask(task, taskId, userToken)
+  //     .then(console.log)
+  //     .catch(console.log)
+  // }
 
   render () {
     return (
