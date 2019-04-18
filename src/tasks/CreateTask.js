@@ -81,6 +81,8 @@ class CreateTask extends Component {
             value={title}
             name="title"
             onChange={this.handleChange}
+            minLength={3}
+            maxLength={18}
             required
           />
           <label htmlFor="description">Description</label>
@@ -89,6 +91,8 @@ class CreateTask extends Component {
             value={description}
             name="description"
             onChange={this.handleChange}
+            minLength={3}
+            maxLength={128}
             required
           />
           <label htmlFor="difficulty">Difficulty</label>
