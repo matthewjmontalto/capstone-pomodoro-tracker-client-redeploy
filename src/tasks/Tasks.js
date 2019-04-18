@@ -50,6 +50,26 @@ class Tasks extends Component {
     })
   )
 
+  completeTask = event => {
+    const userToken = this.props.user.token
+    const completedTask = this.state.tasks.find(task => {
+      return parseInt(task.id, 10) === parseInt(event.target.id, 10)
+    })
+    completedTask.completed = true
+    const taskId = completedTask.id
+
+    apiActions.editTask(completedTask, taskId, userToken)
+      .then(() => apiActions.getTasks(userToken))
+      .then(response => (
+        this.setState({
+          tasks: response.data.tasks,
+          isLoaded: true
+        })
+      ))
+      .then(() => console.log(this.state.tasks))
+      .catch(() => alert(messages.getTasksFailure, 'danger'))
+  }
+
   render () {
     if (this.state.tasks.length === 0) {
       return <NavLink to="/create-task">Add Task</NavLink>
@@ -73,7 +93,7 @@ class Tasks extends Component {
           { this.sortTasks().map(task => (
             <div key={task.id} className="task">
               <div className="task-complete">
-                <i className="material-icons">check_circle_outline</i>
+                <i id={task.id} onClick={this.completeTask} className="material-icons">{task.completed ? '' : 'check_circle_outline'}</i>
               </div>
               <div className="task-title">
                 <NavLink to={'/tasks/' + task.id}>{task.title}</NavLink>

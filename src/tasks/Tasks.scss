@@ -17,6 +17,10 @@ $deep-carbon: #545454;
   }
 }
 
+.completed {
+  background-color: $carbon;
+}
+
 .task {
   align-items: center;
   background-color: $sky;
