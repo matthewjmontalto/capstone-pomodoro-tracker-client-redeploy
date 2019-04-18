@@ -66,7 +66,6 @@ class Tasks extends Component {
           isLoaded: true
         })
       ))
-      .then(() => console.log(this.state.tasks))
       .catch(() => alert(messages.getTasksFailure, 'danger'))
   }
 

@@ -4,6 +4,8 @@ import apiActions from '../apiActions.js'
 
 import './Timer.scss'
 
+import messages from '../auth/messages'
+
 class Timer extends Component {
   constructor () {
     super()
@@ -69,7 +71,7 @@ class Timer extends Component {
               onBreak: true
             })
           })
-          .catch(console.log)
+          .catch(() => alert(messages.editTasksFailure, 'danger'))
       } else {
         this.setState({
           minutes: 25,
