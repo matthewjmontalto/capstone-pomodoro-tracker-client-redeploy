@@ -60,7 +60,7 @@ Any problems or challenges that occurred were addressed immediately using a numb
 -   searching stack overflow for similar issues
 
 ## Wireframes
-![wireframe](https://imgur.com/RSQaLpL)
+![wireframe](./public/readme-img/wireframe.JPG)
 
 ## User Stories
 1.  Create an account
@@ -83,7 +83,7 @@ Any problems or challenges that occurred were addressed immediately using a numb
 18.	Provide motivational quotes during rest periods
 
 ## Screenshot
-![application screenshot](https://imgur.com/NE5sysc)
+![application screenshot](./public/readme-img/app.png)
 
 ## Set-up
 
