@@ -1,6 +1,6 @@
 let apiUrl
 const apiUrls = {
-  production: 'https://pomodoro-task-tracker-api.herokuapp.com/',
+  production: 'https://pomodoro-task-tracker-api.herokuapp.com',
   development: 'http://localhost:4741'
 }
 
