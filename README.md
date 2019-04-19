@@ -2,7 +2,7 @@
 
 ## Links
 
-[Production Application Client](https://matthewjmontalto.github.io/capstone-pomodoro-task-tracker-client/#/) |
+[Production Application Client](https://matthewjmontalto.github.io/capstone-pomodoro-tracker-client-redeploy/#/) |
 [Production Application API](https://pomodoro-task-tracker-api.herokuapp.com/) |
 [Application API Repository](https://github.com/matthewjmontalto/capstone-pomodoro-task-tracker-api)
 
