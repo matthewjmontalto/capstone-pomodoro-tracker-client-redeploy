@@ -29,6 +29,7 @@ class CreateTask extends Component {
 
     const { task } = this.state
     const userToken = this.props.user.token
+    const { alert } = this.props
 
     // 'POST' /tasks
     apiActions.createTask(task, userToken)
@@ -39,7 +40,8 @@ class CreateTask extends Component {
         })
       ))
       // reset state data to clear form fields
-      .catch(() => (
+      .catch(() => {
+        alert(messages.createTaskFailure, 'danger')
         this.setState({
           task: {
             ...task,
@@ -49,8 +51,7 @@ class CreateTask extends Component {
             date: ''
           }
         })
-      ))
-      .catch(() => alert(messages.createTaskFailure, 'danger'))
+      })
   }
 
   handleChange = event => {

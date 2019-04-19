@@ -51,6 +51,7 @@ class Tasks extends Component {
   )
 
   completeTask = event => {
+    const { alert } = this.props
     const userToken = this.props.user.token
     const completedTask = this.state.tasks.find(task => {
       return parseInt(task.id, 10) === parseInt(event.target.id, 10)

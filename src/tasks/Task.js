@@ -20,6 +20,7 @@ class Task extends Component {
 
   // run get request when component mounts
   componentDidMount = () => {
+    const { alert } = this.props
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
 
@@ -32,6 +33,8 @@ class Task extends Component {
   }
 
   handleDelete = event => {
+    const { alert } = this.props
+
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
 

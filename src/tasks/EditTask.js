@@ -18,6 +18,8 @@ class EditTask extends Component {
   }
 
   componentDidMount = () => {
+    const { alert } = this.props
+
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
     // 'GET' /task/:id
@@ -33,6 +35,7 @@ class EditTask extends Component {
     const userToken = this.props.user.token
     const taskId = this.props.match.params.id
     const { task } = this.state
+    const { alert } = this.props
 
     // 'PATCH' '/tasks/:id'
     apiActions.editTask(task, taskId, userToken)
@@ -42,7 +45,8 @@ class EditTask extends Component {
           updated: true
         })
       ))
-      .catch(() => (
+      .catch(() => {
+        alert(messages.editTaskFailure, 'danger')
         this.setState({
           task: {
             ...task,
@@ -52,8 +56,7 @@ class EditTask extends Component {
             date: ''
           }
         })
-      ))
-      .catch(() => alert(messages.editTaskFailure, 'danger'))
+      })
   }
 
   handleChange = event => {
