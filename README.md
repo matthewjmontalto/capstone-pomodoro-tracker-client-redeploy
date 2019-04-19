@@ -90,7 +90,7 @@ Any problems or challenges that occurred were addressed immediately using a numb
 1.  fork and clone this repository
 2.  navigate to the project directory and run `git init`
 2.  Open your terminal and run `npm install` to install dependencies
-3.  Entering `npm run start` in to the terminal will establish a local development server.
+3.  Entering `npm run start` in to the terminal will establish a local development server and should also open a browser tab. Or, you can navigate your browser to `http://localhost:7165/`
 4.  Additionally, run these commands often:
-  1.`npm run make-standard`: reformats code in the standard javascript style
-  2.`npm run build`: bundles styles and scripts in view of index.htmls
+  - `npm run make-standard`: reformats code in the standard javascript style
+  - `npm run build`: bundles styles and scripts to be references by index.htmls
