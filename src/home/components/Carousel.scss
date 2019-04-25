@@ -4,7 +4,7 @@ $watermelon: #ff383f;
 $sky: #caebf2;
 $deep-carbon: #545454;
 
-h1 {
+h2 {
   margin-top: 5vh;
   text-align: center;
 }
@@ -15,9 +15,9 @@ h1 {
   border: 3px $carbon solid;
   border-radius: 10px;
   display: flex;
-  height: 50vh;
   margin: 5vh auto 0;
   max-width: 60vw;
+  min-height: 50vh;
   padding: 25px;
 
   .carousel-control-next-icon {
@@ -29,18 +29,29 @@ h1 {
     background-color: $watermelon;
     border-radius: 5px;
   }
+
 }
 
 .slide-content {
   height: 100%;
   margin: 0 auto;
   text-align: center;
-  width: 75%;
+  width: 85%;
+
+  ol {
+    text-align: left;
+  }
 }
 
 @media only screen and (max-width: 768px) {
+  h2 {
+    margin-top: 2.5vh;
+  }
+
   .carousel {
-    margin: 5vh auto 0;
+    margin: 2.5vh auto 0;
     max-width: 100vw;
+    min-height: 50vh;
+    overflow: auto;
   }
 }
