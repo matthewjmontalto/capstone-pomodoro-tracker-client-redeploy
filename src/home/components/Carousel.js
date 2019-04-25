@@ -5,7 +5,6 @@ import './Carousel.scss'
 const WelcomeInstructions = () => (
   <Fragment>
     <h2>Instructions</h2>
-    <hr/>
     <Carousel>
       <Carousel.Item>
         <div className="slide-content">
