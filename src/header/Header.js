@@ -26,7 +26,7 @@ const alwaysOptions = (
 
 const Header = ({ user }) => (
   <header className="main-header">
-    <h1>Pomodoro Task Tracker</h1>
+    <h1>Pomato Task Tracker</h1>
     <nav>
       { user && <span>Welcome, {user.email}</span>}
       { user ? authenticatedOptions : unauthenticatedOptions }

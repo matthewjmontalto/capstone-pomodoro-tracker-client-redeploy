@@ -8,8 +8,16 @@ const WelcomeInstructions = () => (
     <Carousel>
       <Carousel.Item>
         <div className="slide-content">
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <h3>What the heck is it?!</h3>
+          <p>Well, since you asked, a pomato is a potato plant with a tomato
+          plant grafted onto it to increase crop efficiency and tomato yield.
+          Pretty cool, right?</p>
+        </div>
+      </Carousel.Item>
+      <Carousel.Item>
+        <div className="slide-content">
+          <h3>Um, no really...</h3>
+          <p>Oh this old thing! Yes. </p>
         </div>
       </Carousel.Item>
     </Carousel>
