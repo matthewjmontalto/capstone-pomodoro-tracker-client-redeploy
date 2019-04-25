@@ -64,6 +64,10 @@ class App extends Component {
           <Route path='/sign-in' render={() => (
             <SignIn alert={this.alert} setUser={this.setUser} />
           )} />
+          {/* Home */}
+          <Route exact path='/' render={() => (
+            <WelcomeInstructions />
+          )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />
           )} />
@@ -83,7 +87,6 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/tasks/:id/edit' render={(props) => (
             <EditTask alert={this.alert} user={user} />
           )} />
-          <WelcomeInstructions/>
         </main>
       </React.Fragment>
     )
