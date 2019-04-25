@@ -1,0 +1,39 @@
+$carbon: #a9a9a9;
+$neutral: #efefef;
+$watermelon: #ff383f;
+$sky: #caebf2;
+$deep-carbon: #545454;
+
+h1 {
+  text-align: center;
+  margin-top: 5vh;
+}
+
+.carousel {
+  background-color: $sky;
+  border: 3px $carbon solid;
+  border-radius: 10px;
+  height: 50vh;
+  margin: 5vh auto 0;
+  max-width: 60vw;
+  padding: 25px;
+}
+
+.slide-content {
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  width: 75%;
+}
+
+@media only screen and (max-width: 768px) {
+  .carousel {
+    background-color: $sky;
+    border: 3px $carbon solid;
+    border-radius: 10px;
+    height: 50vh;
+    margin: 5vh auto 0;
+    max-width: 100vw;
+    padding: 25px;
+  }
+}

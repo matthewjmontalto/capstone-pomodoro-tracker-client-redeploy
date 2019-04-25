@@ -10,6 +10,9 @@ import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 
+// Home
+import WelcomeInstructions from './home/components/Carousel'
+
 // Resource components
 import Tasks from './tasks/Tasks.js'
 import Task from './tasks/Task.js'
@@ -80,6 +83,7 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/tasks/:id/edit' render={(props) => (
             <EditTask alert={this.alert} user={user} />
           )} />
+          <WelcomeInstructions/>
         </main>
       </React.Fragment>
     )
