@@ -21,8 +21,12 @@ const WelcomeInstructions = () => (
           <hr/>
           <p>
             Well, much like the pomato, this application is designed to increase
-            your efficiency by applying the pomodoro time management technique
+            your efficiency by applying the pomodoro (italian for tomato) time management technique
             to your tasks!
+          </p>
+          <p>
+            ({'I\'ll'} let you decide if {'you\'re'} the tomato or potato in this anology.
+          Work with me!)
           </p>
         </div>
       </Carousel.Item>
