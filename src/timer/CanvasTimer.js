@@ -1,26 +1,55 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import './CanvasTimer.scss'
 
-import apiActions from '../apiActions.js'
+class CanvasTimer extends Component {
+  constructor (props) {
+    super(props)
 
-import './Timer.scss'
-
-import messages from '../auth/messages'
-
-class Timer extends Component {
-  constructor () {
-    super()
-
+    // creates a reference to the canvas node element in the DOM
+    // Gets passed as attribute to JSX canvas element
     this.state = {
-      minutes: 25,
+      minutes: 1,
       seconds: 0,
       isCounting: false,
       wasPaused: false,
-      onBreak: false
+      onBreak: false,
+      percentComplete: 1
     }
 
+    this.canvasRef = React.createRef()
     this.secondsRemaining = 0
     this.handleInterval = null
     this.numElapsedTimers = 0
+  }
+
+  componentDidMount = () => {
+    const canvasTimer = this.canvasRef.current
+    const ctx = canvasTimer.getContext('2d')
+    ctx.beginPath()
+    ctx.strokeStyle = 'grey'
+    ctx.lineWidth = '10'
+    ctx.arc(100, 100, 50, 0, 2 * Math.PI, true)
+    ctx.stroke()
+  }
+
+  componentWillUpdate = () => {
+    const canvasTimer = this.canvasRef.current
+    const ctx = canvasTimer.getContext('2d')
+    ctx.clearRect(0, 0, 300, 300)
+    ctx.beginPath()
+    ctx.strokeStyle = 'red'
+    ctx.lineWidth = '10'
+    ctx.arc(100, 100, 50, 0, ((this.state.percentComplete * 2) * Math.PI), false)
+    ctx.stroke()
+    console.log(this.state.percentComplete)
+  }
+
+  calcPercentComplete = () => {
+    const startingSeconds = (1 * 60)
+    const percent = this.secondsRemaining / startingSeconds
+    this.setState({
+      percentComplete: percent
+    })
   }
 
   tick = () => {
@@ -54,24 +83,24 @@ class Timer extends Component {
         // increment count of elapsed timers
         this.numElapsedTimers++
         // deconstruct props for api patch call
-        const { user, task } = this.props
-        const userToken = user.token
-        const taskId = task.id
+        // const { user, task } = this.props
+        // const userToken = user.token
+        // const taskId = task.id
         // before api call, add num of times timer reached 00:00 to current number
         // of pomodoro sessions returned from db
-        task.number_pomodoro_sessions += this.numElapsedTimers
+        // task.number_pomodoro_sessions += this.numElapsedTimers
 
         // patch resource with updated total number times timer elapsed
-        apiActions.editTask(task, taskId, userToken)
-          .then(() => {
-            this.setState({
-              minutes: 5,
-              seconds: 0,
-              isCounting: false,
-              onBreak: true
-            })
-          })
-          .catch(() => alert(messages.editTasksFailure, 'danger'))
+        // apiActions.editTask(task, taskId, userToken)
+        //   .then(() => {
+        //     this.setState({
+        //       minutes: 5,
+        //       seconds: 0,
+        //       isCounting: false,
+        //       onBreak: true
+        //     })
+        //   })
+        //   .catch(() => alert(messages.editTasksFailure, 'danger'))
       } else {
         this.setState({
           minutes: 25,
@@ -82,7 +111,8 @@ class Timer extends Component {
       }
     }
     this.secondsRemaining--
-    console.log(this.secondsRemaining / (25 * 60) * 100)
+    this.calcPercentComplete()
+    // console.log(this.percentComplete)
   }
 
   // called when start button clicked
@@ -130,40 +160,25 @@ class Timer extends Component {
     }
   }
 
-  // Look for method to stall sign-out to allow for uninterrupted patch call/response
-  // before unmount
-
-  // when component unmounts...
-  // componentWillUnmount = () => {
-  //   // stop interval
-  //   clearInterval(this.handleInterval)
-  //   // deconstruct props for api patch call
-  //   const { user, task } = this.props
-  //   const userToken = user.token
-  //   const taskId = task.id
-  //
-  //   // before api call, add num of times timer reached 00:00 to current number
-  //   // of pomodoro sessions stored in db
-  //   task.number_pomodoro_sessions += this.numElapsedTimers
-  //
-  //   // patch resource with updated total number times timer elapsed
-  //   apiActions.editTask(task, taskId, userToken)
-  //     .then(console.log)
-  //     .catch(console.log)
-  // }
-
   render () {
     return (
-      <div className="pomodoro">
-        <div className="timer">{this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</div>
+      <Fragment>
+        <div className="timer-wrapper">
+          <canvas
+            ref={this.canvasRef}
+            width={300}
+            height={300}
+          />
+        </div>
         <div className="timer-controls">
           <i onClick={this.startCountdown} className="material-icons">play_arrow</i>
           <i onClick={this.pauseCountdown} className="material-icons">pause_circle_outline</i>
           <i onClick={this.resetCountdown} className="material-icons">update</i>
         </div>
-      </div>
+        <div>{/* Will hold digital readout of remaining time */}</div>
+      </Fragment>
     )
   }
 }
 
-export default Timer
+export default CanvasTimer

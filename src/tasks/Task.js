@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Redirect } from 'react-router'
 import { Link, withRouter } from 'react-router-dom'
+import CanvasTimer from '../timer/CanvasTimer.js'
 
 import messages from '../auth/messages'
 
@@ -59,6 +60,7 @@ class Task extends Component {
     return (
       <Fragment>
         <h2>{title}</h2>
+        <CanvasTimer />
         <p>Description: {description}</p>
         <p>Date: {date}</p>
         <p>difficulty: {difficulty}</p>
