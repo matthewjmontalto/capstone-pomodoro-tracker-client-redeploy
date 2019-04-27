@@ -64,12 +64,21 @@ class Timer extends Component {
         // patch resource with updated total number times timer elapsed
         apiActions.editTask(task, taskId, userToken)
           .then(() => {
-            this.setState({
-              minutes: 5,
-              seconds: 0,
-              isCounting: false,
-              onBreak: true
-            })
+            if (this.numElapsedTimers % 4 === 0) {
+              this.setState({
+                minutes: 15,
+                seconds: 0,
+                isCounting: false,
+                onBreak: true
+              })
+            } else {
+              this.setState({
+                minutes: 5,
+                seconds: 0,
+                isCounting: false,
+                onBreak: true
+              })
+            }
           })
           .catch(() => alert(messages.editTasksFailure, 'danger'))
       } else {
@@ -80,9 +89,9 @@ class Timer extends Component {
           onBreak: false
         })
       }
+    } else {
+      this.secondsRemaining--
     }
-    this.secondsRemaining--
-    console.log(this.secondsRemaining / (25 * 60) * 100)
   }
 
   // called when start button clicked

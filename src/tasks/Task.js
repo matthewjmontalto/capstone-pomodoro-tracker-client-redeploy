@@ -59,8 +59,11 @@ class Task extends Component {
     const { id, title, description, date, difficulty, completed } = this.state.task
     return (
       <Fragment>
+        <CanvasTimer
+          user={this.props.user}
+          task={this.state.task}
+        />
         <h2>{title}</h2>
-        <CanvasTimer />
         <p>Description: {description}</p>
         <p>Date: {date}</p>
         <p>difficulty: {difficulty}</p>

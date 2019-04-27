@@ -1,4 +1,7 @@
 import React, { Component, Fragment } from 'react'
+import messages from '../auth/messages'
+import apiActions from '../apiActions.js'
+
 import './CanvasTimer.scss'
 
 class CanvasTimer extends Component {
@@ -8,7 +11,7 @@ class CanvasTimer extends Component {
     // creates a reference to the canvas node element in the DOM
     // Gets passed as attribute to JSX canvas element
     this.state = {
-      minutes: 1,
+      minutes: 25,
       seconds: 0,
       isCounting: false,
       wasPaused: false,
@@ -17,35 +20,49 @@ class CanvasTimer extends Component {
     }
 
     this.canvasRef = React.createRef()
+    this.startingMinutes = 25
     this.secondsRemaining = 0
     this.handleInterval = null
     this.numElapsedTimers = 0
   }
 
+  // Redraw arc every time state gets updated by tick()
+  timerProgress = (color, percent) => {
+    const canvasTimer = this.canvasRef.current
+    const ctx = canvasTimer.getContext('2d')
+
+    ctx.clearRect(0, 0, 300, 300)
+    ctx.beginPath()
+    ctx.strokeStyle = color
+    ctx.lineWidth = '35'
+    ctx.arc(150, 150, 100, 0, ((percent * 2) * Math.PI), false)
+    ctx.stroke()
+  }
+
+  // Draw initial arc on mount
   componentDidMount = () => {
     const canvasTimer = this.canvasRef.current
     const ctx = canvasTimer.getContext('2d')
+
     ctx.beginPath()
     ctx.strokeStyle = 'grey'
-    ctx.lineWidth = '10'
-    ctx.arc(100, 100, 50, 0, 2 * Math.PI, true)
+    ctx.lineWidth = '35'
+    ctx.arc(150, 150, 100, 0, 2 * Math.PI, true)
     ctx.stroke()
   }
 
   componentWillUpdate = () => {
-    const canvasTimer = this.canvasRef.current
-    const ctx = canvasTimer.getContext('2d')
-    ctx.clearRect(0, 0, 300, 300)
-    ctx.beginPath()
-    ctx.strokeStyle = 'red'
-    ctx.lineWidth = '10'
-    ctx.arc(100, 100, 50, 0, ((this.state.percentComplete * 2) * Math.PI), false)
-    ctx.stroke()
-    console.log(this.state.percentComplete)
+    if (this.state.percentComplete > 0.25) {
+      this.timerProgress('#caebf2', this.state.percentComplete)
+    } else if (this.state.percentComplete === 0) {
+      this.timerProgress('grey', 1)
+    } else {
+      this.timerProgress('#ff383f', this.state.percentComplete)
+    }
   }
 
   calcPercentComplete = () => {
-    const startingSeconds = (1 * 60)
+    const startingSeconds = (this.startingMinutes * 60)
     const percent = this.secondsRemaining / startingSeconds
     this.setState({
       percentComplete: percent
@@ -83,35 +100,51 @@ class CanvasTimer extends Component {
         // increment count of elapsed timers
         this.numElapsedTimers++
         // deconstruct props for api patch call
-        // const { user, task } = this.props
-        // const userToken = user.token
-        // const taskId = task.id
+        const { user, task } = this.props
+        const userToken = user.token
+        const taskId = task.id
         // before api call, add num of times timer reached 00:00 to current number
         // of pomodoro sessions returned from db
-        // task.number_pomodoro_sessions += this.numElapsedTimers
+        task.number_pomodoro_sessions += this.numElapsedTimers
 
         // patch resource with updated total number times timer elapsed
-        // apiActions.editTask(task, taskId, userToken)
-        //   .then(() => {
-        //     this.setState({
-        //       minutes: 5,
-        //       seconds: 0,
-        //       isCounting: false,
-        //       onBreak: true
-        //     })
-        //   })
-        //   .catch(() => alert(messages.editTasksFailure, 'danger'))
+        apiActions.editTask(task, taskId, userToken)
+          .then(() => {
+            if (this.numElapsedTimers % 4 === 0) {
+              this.setState({
+                minutes: 15,
+                seconds: 0,
+                isCounting: false,
+                onBreak: true,
+                percentComplete: 1
+              })
+              this.startingMinutes = 15
+            } else {
+              this.setState({
+                minutes: 5,
+                seconds: 0,
+                isCounting: false,
+                onBreak: true,
+                percentComplete: 1
+              })
+              this.startingMinutes = 5
+            }
+          })
+          .catch(() => alert(messages.editTasksFailure, 'danger'))
       } else {
         this.setState({
           minutes: 25,
           seconds: 0,
           isCounting: false,
-          onBreak: false
+          onBreak: false,
+          percentComplete: 1
         })
+        this.startingMinutes = 25
       }
+    } else {
+      this.secondsRemaining--
+      this.calcPercentComplete()
     }
-    this.secondsRemaining--
-    this.calcPercentComplete()
     // console.log(this.percentComplete)
   }
 
@@ -149,9 +182,11 @@ class CanvasTimer extends Component {
       minutes: 25,
       seconds: 0,
       isCounting: false,
-      wasPaused: false,
-      onBreak: false
+      onBreak: false,
+      percentComplete: 1
     })
+    this.startingMinutes = 25
+    this.timerProgress('grey', 1)
   }
 
   componentWillUnmount = () => {
@@ -163,19 +198,21 @@ class CanvasTimer extends Component {
   render () {
     return (
       <Fragment>
-        <div className="timer-wrapper">
-          <canvas
-            ref={this.canvasRef}
-            width={300}
-            height={300}
-          />
+        <div className="analaog-pomodoro">
+          <div className="timer-wrapper">
+            <canvas
+              ref={this.canvasRef}
+              width={300}
+              height={300}
+            />
+          </div>
+          <div className="timer">{this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</div>
+          <div className="timer-controls">
+            <i onClick={this.startCountdown} className="material-icons">play_arrow</i>
+            <i onClick={this.pauseCountdown} className="material-icons">pause_circle_outline</i>
+            <i onClick={this.resetCountdown} className="material-icons">update</i>
+          </div>
         </div>
-        <div className="timer-controls">
-          <i onClick={this.startCountdown} className="material-icons">play_arrow</i>
-          <i onClick={this.pauseCountdown} className="material-icons">pause_circle_outline</i>
-          <i onClick={this.resetCountdown} className="material-icons">update</i>
-        </div>
-        <div>{/* Will hold digital readout of remaining time */}</div>
       </Fragment>
     )
   }
