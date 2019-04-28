@@ -78,19 +78,6 @@ class CanvasTimer extends Component {
       minutes: min,
       seconds: sec
     })
-    // concats single digit second to double digit display
-    if (sec < 10) {
-      this.setState({
-        seconds: '0' + this.state.seconds
-      })
-    }
-
-    // concats single digit minute to double digit display
-    if (min < 10) {
-      this.setState({
-        minutes: '0' + this.state.minutes
-      })
-    }
 
     // when timer runs down to 00:00 clear interval, update db, and toggle
     // between work and break times.
@@ -157,14 +144,17 @@ class CanvasTimer extends Component {
     const min = this.state.minutes
     const sec = this.state.seconds
     // convert minutes place to seconds and add seconds place to total secondsRemaining
-    this.secondsRemaining = (min * 60) + sec
+    if (!this.wasPaused) {
+      this.secondsRemaining = (min * 60) + sec
+    }
     // call tick first time to compensate for delay experiences with setInterval
     this.tick()
     // call this.tick() every second until setInterval gets cleared
     this.handleInterval = setInterval(this.tick, 1000)
     // toggle state to represent a running timer
     this.setState({
-      isCounting: true
+      isCounting: true,
+      wasPaused: false
     })
   }
 
@@ -206,12 +196,12 @@ class CanvasTimer extends Component {
               height={300}
             />
           </div>
-          <div className="timer">{this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</div>
           <div className="timer-controls">
             <i onClick={this.startCountdown} className="material-icons">play_arrow</i>
             <i onClick={this.pauseCountdown} className="material-icons">pause_circle_outline</i>
             <i onClick={this.resetCountdown} className="material-icons">update</i>
           </div>
+          <div className="digital-timer">{this.state.minutes < 10 ? '0' + this.state.minutes : this.state.minutes}:{this.state.seconds < 10 ? '0' + this.state.seconds : this.state.seconds}</div>
         </div>
       </Fragment>
     )

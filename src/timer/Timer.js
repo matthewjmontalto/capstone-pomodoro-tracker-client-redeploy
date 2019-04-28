@@ -32,19 +32,6 @@ class Timer extends Component {
       minutes: min,
       seconds: sec
     })
-    // concats single digit second to double digit display
-    if (sec < 10) {
-      this.setState({
-        seconds: '0' + this.state.seconds
-      })
-    }
-
-    // concats single digit minute to double digit display
-    if (min < 10) {
-      this.setState({
-        minutes: '0' + this.state.minutes
-      })
-    }
 
     // when timer runs down to 00:00 clear interval, update db, and toggle
     // between work and break times.
@@ -164,7 +151,7 @@ class Timer extends Component {
   render () {
     return (
       <div className="pomodoro">
-        <div className="timer">{this.state.minutes}:{this.state.seconds === 0 ? '00' : this.state.seconds}</div>
+        <div className="timer">{this.state.minutes < 10 ? '0' + this.state.minutes : this.state.minutes}:{this.state.seconds < 10 ? '0' + this.state.seconds : this.state.seconds}</div>
         <div className="timer-controls">
           <i onClick={this.startCountdown} className="material-icons">play_arrow</i>
           <i onClick={this.pauseCountdown} className="material-icons">pause_circle_outline</i>

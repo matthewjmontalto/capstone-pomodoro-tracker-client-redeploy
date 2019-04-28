@@ -1,3 +1,15 @@
+.analaog-pomodoro {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  .digital-timer {
+    font-size: 3rem;
+    position: relative;
+    top: -14rem;
+  }
+}
+
 .timer-wrapper {
   transform: rotate(-90deg);
   width: 300px;
