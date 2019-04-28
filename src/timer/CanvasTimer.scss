@@ -2,12 +2,23 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: 384px;
 
   .digital-timer {
+    font-family: 'Jura', sans-serif;
     font-size: 3rem;
     position: relative;
-    top: -14rem;
+    top: -15rem;
   }
+
+  .timer-wrapper {
+    margin: 0;
+  }
+
+  .timer-controls > i {
+    font-size: 3rem;
+  }
+
 }
 
 .timer-wrapper {

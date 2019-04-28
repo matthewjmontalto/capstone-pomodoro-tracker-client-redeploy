@@ -8,6 +8,9 @@ import messages from '../auth/messages'
 // import functions that handle api calls
 import apiActions from '../apiActions.js'
 
+// styles
+import './Task.scss'
+
 class Task extends Component {
   constructor () {
     super()
@@ -63,13 +66,15 @@ class Task extends Component {
           user={this.props.user}
           task={this.state.task}
         />
-        <h2>{title}</h2>
-        <p>Description: {description}</p>
-        <p>Date: {date}</p>
-        <p>difficulty: {difficulty}</p>
-        <p>completed: {completed ? 'Done' : 'Incomplete'}</p>
-        <button key={id} onClick={this.handleDelete}>Delete Task</button>
-        <Link to={this.props.match.url + '/edit'}><button>Edit Task Details</button></Link>
+        <div className="task-display">
+          <h2>{title}</h2>
+          <p>Description: {description}</p>
+          <p>Date: {date}</p>
+          <p>Points: {difficulty}</p>
+          <p>Completed: {completed ? 'Done' : 'Incomplete'}</p>
+          <i key={id} onClick={this.handleDelete} className="material-icons">delete_forever</i>
+          <Link to={this.props.match.url + '/edit'}><i className="material-icons">edit</i></Link>
+        </div>
       </Fragment>
     )
   }

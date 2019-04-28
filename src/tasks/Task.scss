@@ -1,0 +1,21 @@
+$carbon: #a9a9a9;
+$neutral: #efefef;
+$sky: #caebf2;
+$watermelon: #ff383f;
+
+.task-display {
+  background-color: $sky;
+  border: 3px solid $carbon;
+  border-radius: 5px;
+  padding: .5rem;
+
+  & > i {
+    font-size: 2rem;
+
+    &:hover {
+      color: $watermelon;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+}
