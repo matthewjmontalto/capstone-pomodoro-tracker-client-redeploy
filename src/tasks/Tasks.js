@@ -96,7 +96,7 @@ class Tasks extends Component {
                 <i id={task.id} onClick={this.completeTask} className="material-icons">{task.completed ? '' : 'check_circle_outline'}</i>
               </div>
               <div className="task-title">
-                <NavLink to={'/tasks/' + task.id}>{task.title}</NavLink>
+                <NavLink to={'/tasks/' + task.id}><p>{task.title}</p></NavLink>
               </div>
               <div>
                 <Timer
