@@ -1,21 +1,64 @@
 $carbon: #a9a9a9;
+$deep-carbon: #545454;
 $neutral: #efefef;
 $sky: #caebf2;
 $watermelon: #ff383f;
+
+.flex-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  margin-top: 3rem;
+}
 
 .task-display {
   background-color: $sky;
   border: 3px solid $carbon;
   border-radius: 5px;
-  padding: .5rem;
+  padding: 2rem;
 
-  & > i {
+  & > div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  & h2 {
+    margin: 0 0 2rem;
+  }
+
+  & span {
+    text-decoration: underline;
+  }
+
+  i {
+    color: $deep-carbon;
     font-size: 2rem;
+    margin: 0 1rem;
 
     &:hover {
       color: $watermelon;
       cursor: pointer;
       text-decoration: none;
     }
+  }
+
+  &.complete {
+    background-color: $carbon;
+  }
+
+  &.incomplete {
+    background-color: $sky;
+  }
+}
+
+.hide {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .flex-container {
+    flex-direction: column;
   }
 }

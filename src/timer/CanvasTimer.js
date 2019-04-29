@@ -51,6 +51,7 @@ class CanvasTimer extends Component {
     ctx.stroke()
   }
 
+  // Update arc style depending timer remaining duration
   componentWillUpdate = () => {
     if (this.state.percentComplete > 0.25) {
       this.timerProgress('#caebf2', this.state.percentComplete)
@@ -61,6 +62,8 @@ class CanvasTimer extends Component {
     }
   }
 
+  // Calculate a percent-like value that acts as radian for canvas arc -
+  // does not return actual percentage.
   calcPercentComplete = () => {
     const startingSeconds = (this.startingMinutes * 60)
     const percent = this.secondsRemaining / startingSeconds
