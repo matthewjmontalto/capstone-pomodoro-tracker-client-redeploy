@@ -53,9 +53,7 @@ class CanvasTimer extends Component {
 
   // Update arc style depending timer remaining duration
   componentWillUpdate = () => {
-    if (this.state.percentComplete > 0.25) {
-      this.timerProgress('#caebf2', this.state.percentComplete)
-    } else if (this.state.percentComplete === 0) {
+    if (this.state.percentComplete === 0) {
       this.timerProgress('grey', 1)
     } else {
       this.timerProgress('#ff383f', this.state.percentComplete)
