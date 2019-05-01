@@ -7,6 +7,8 @@ import messages from '../auth/messages'
 // import functions that handle api calls
 import apiActions from '../apiActions.js'
 
+import './TaskForms.scss'
+
 class CreateTask extends Component {
   constructor () {
     super()
@@ -74,8 +76,9 @@ class CreateTask extends Component {
 
     return (
       <Fragment>
-        <h2>Add New Task</h2>
-        <form className="auth-form" onSubmit={this.handleSubmit}>
+        <Link to='/tasks'>Back</Link>
+        <form className="task-form" onSubmit={this.handleSubmit}>
+          <h2>Add New Task</h2>
           <label htmlFor="title">Title</label>
           <input
             type="text"
@@ -96,9 +99,10 @@ class CreateTask extends Component {
             maxLength={128}
             required
           />
-          <label htmlFor="difficulty">Difficulty</label>
+          <label htmlFor="difficulty">Points</label>
           <input
             type="number"
+            min="0"
             value={difficulty}
             name="difficulty"
             onChange={this.handleChange}
@@ -110,9 +114,8 @@ class CreateTask extends Component {
             name="date"
             onChange={this.handleChange}
           />
-          <input type="submit" />
+          <button type="submit">Add New Task</button>
         </form>
-        <Link to='/tasks'>Back</Link>
       </Fragment>
     )
   }

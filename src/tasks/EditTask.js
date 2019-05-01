@@ -7,6 +7,8 @@ import messages from '../auth/messages'
 // import functions that handle api calls
 import apiActions from '../apiActions.js'
 
+import './TaskForms.scss'
+
 class EditTask extends Component {
   constructor () {
     super()
@@ -88,8 +90,8 @@ class EditTask extends Component {
     return (
       <Fragment>
         <Link to={'/tasks/' + this.props.match.params.id}>Back</Link>
-        <h2>Edit Task Details</h2>
-        <form className="auth-form" onSubmit={this.handleSubmit}>
+        <form className="task-form" onSubmit={this.handleSubmit}>
+          <h2>Edit Task Details</h2>
           <label htmlFor="title">Title</label>
           <input
             type="text"
@@ -134,11 +136,12 @@ class EditTask extends Component {
           <label htmlFor="number_pomodoro_sessions">Number of pomodoro rounds</label>
           <input
             type="number"
+            min="0"
             value={numberPomodoroSessions}
             name="number_pomodoro_sessions"
             onChange={this.handleChange}
           />
-          <input type="submit" />
+          <button type="submit">Update Task</button>
         </form>
       </Fragment>
     )
