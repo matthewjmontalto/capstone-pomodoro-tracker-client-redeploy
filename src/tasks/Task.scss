@@ -17,6 +17,7 @@ $watermelon: #ff383f;
   border: 3px solid $carbon;
   border-radius: 5px;
   padding: 2rem;
+  width: 500px;
 
   & > div {
     display: flex;
@@ -60,5 +61,9 @@ $watermelon: #ff383f;
 @media only screen and (max-width: 768px) {
   .flex-container {
     flex-direction: column;
+  }
+
+  .task-display {
+    width: 100%;
   }
 }
